@@ -29,10 +29,11 @@ public class PruebasController {
         return "/pruebas/listado";
     }
     
-    @GetMapping("/listado/idCategoria")
+    @GetMapping("/listado/{idCategoria}")
     public String listado(Categoria categoria, Model model) {
         categoria = categoriaService.getCategoria(categoria);
         var lista = categoria.getProductos();
+        
         model.addAttribute("productos", lista);        
         var categorias =  categoriaService.getCategorias(true);
         model.addAttribute("categorias", categorias);
