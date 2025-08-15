@@ -15,7 +15,7 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     @Transactional(readOnly=true)
-    public List<Categoria> getCategoria(boolean activo) {
+    public List<Categoria> getCategorias(boolean activo) {
         var lista = categoriaRepository.findAll();
         //Se valida si esta activo
         if (activo) {

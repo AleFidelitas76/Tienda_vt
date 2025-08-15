@@ -1,6 +1,7 @@
 package com.tienda.controller;
 
 import com.tienda.domain.Producto;
+import com.tienda.service.CategoriaService;
 import com.tienda.service.ProductoService;
 import com.tienda.service.FirebaseStorageService;
 import java.util.Locale;
@@ -21,6 +22,10 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
+    
+    
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping("/listado")
     public String listado(Model model) {
@@ -28,6 +33,10 @@ public class ProductoController {
 
         model.addAttribute("productos", lista);
         model.addAttribute("totalProductos", lista.size());
+        
+        var categorias =  categoriaService.getCategorias(true);
+        model.addAttribute("categorias", categorias);
+        
         return "/producto/listado";
     }
 
@@ -47,6 +56,7 @@ public class ProductoController {
         redirectAttributes.addFlashAttribute("todoOk", messageSource.getMessage("mensaje.actualizado", null, Locale.getDefault()));
         return "redirect:/producto/listado";
     }
+    
 
     @PostMapping("/eliminar")
     public String eliminar(Producto producto, RedirectAttributes redirectAttributes) {
@@ -70,6 +80,9 @@ public class ProductoController {
 
         model.addAttribute("producto", producto);
 
+        var categorias =  categoriaService.getCategorias(true);
+        model.addAttribute("categorias", categorias);
+        
         return "/producto/modifica";
     }
 }
